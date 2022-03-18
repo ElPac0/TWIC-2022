@@ -3,35 +3,35 @@ package com.controller;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.EntityManager;
+
 import org.springframework.aop.framework.DefaultAopProxyFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dao.DaoFactory;
-import com.dao.VilleDao;
-
-import models.Ville;
+import com.repository.Ville;
+import com.repository.VilleRepository;
 
 @RestController
 public class VilleController {
-	private VilleDao villeDao;
+    
+    private VilleRepository villeRepository;
+	
+	public VilleController(VilleRepository villeRepository) {
+		super();
+		this.villeRepository = villeRepository;
+	}
 
-	
-	
 	// fonction pour récupérer le contenu de la BDD
 	@RequestMapping(value="/ville", method=RequestMethod.GET)
-	public List<Ville> get(@RequestParam(required  = false, value="codePostal") Integer codePostal) {
-		DaoFactory daoFactory = DaoFactory.getInstance();
-        this.villeDao = daoFactory.getVilleDao();
-		System.out.println("get");
+	public List<Ville> get(@RequestParam(required  = false, value="codePostal") String codePostal) {		
 		if(Objects.isNull(codePostal)) {
-			List<Ville> villes = this.villeDao.recupererVilles();
-			return villes;
+			return this.villeRepository.findAll();
 		}else {
-			List<Ville> villes = this.villeDao.recupererVilles(codePostal);
-			return villes;
+			return this.villeRepository.findAllByCodePostal(codePostal);
 		}
 
 	}
@@ -46,13 +46,12 @@ public class VilleController {
 			@RequestParam(required  = true, value="Latitude") String Latitude,
 			@RequestParam(required  = true, value="Longitude") String Longitude
 			) {
-		DaoFactory daoFactory = DaoFactory.getInstance();
-        this.villeDao = daoFactory.getVilleDao();
 		Ville nouvelleVille = new Ville(
 				Code_commune_INSEE,  Nom_commune,  Code_postal,  Libelle_acheminement,
 				 Ligne_5,  Latitude,  Longitude
 				);
-		this.villeDao.insererVille(nouvelleVille);
+		
+		this.villeRepository.save(nouvelleVille);
 	}
 
 }

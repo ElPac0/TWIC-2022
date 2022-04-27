@@ -9,5 +9,6 @@ import java.util.List;
 @Repository
 public interface VilleRepository extends JpaRepository<Ville, String>, JpaSpecificationExecutor<Ville> {
     List<Ville> findAllByCodePostal(String CodePostal);
+    List<Ville> findAllByCodeCommuneINSEE(String CodeCommuneInsee);
     List<Ville> findAll();
 }

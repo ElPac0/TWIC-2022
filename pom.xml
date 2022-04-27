@@ -8,7 +8,7 @@
 	<properties>
 		<java.version>11</java.version>
 		<sonar.host.url>http://localhost:9000</sonar.host.url>
-		<sonar.login>5da1e6ee849091ca8fec6cf16062bc190df5382e</sonar.login>
+		<sonar.login>8261cc5315535b4c4349f6c4212263045679e51c</sonar.login>
 		<sonar.projectKey>TWIC:back</sonar.projectKey>
 		<sonar.projectName>TWICBACK</sonar.projectName>
 		<sonar.coverage.jacoco.xmlReportPaths>target/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
@@ -64,14 +64,6 @@
 		    <type>jar</type>
 		    <scope>compile</scope>
 		</dependency>
-
-		<!-- Optionnel : Permet d'avoir des métriques Spring Boot -->
-		<!-- 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
-		 -->
 	</dependencies>
 
 	<build>

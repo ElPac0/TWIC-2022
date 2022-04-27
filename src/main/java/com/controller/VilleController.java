@@ -29,7 +29,8 @@ public class VilleController {
 	@RequestMapping(value="/ville", method=RequestMethod.GET)
 	public List<Ville> get(@RequestParam(required  = false, value="codePostal") String codePostal) {		
 		if(Objects.isNull(codePostal)) {
-			return this.villeRepository.findAll();
+			List<Ville> listeVille = this.villeRepository.findAll();
+			return listeVille;
 		}else {
 			return this.villeRepository.findAllByCodePostal(codePostal);
 		}

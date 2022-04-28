@@ -23,8 +23,8 @@ public class VilleController {
     }
 
     // fonction pour récupérer le contenu de la BDD
-    @GetMapping(value = "/ville")
-    public List<Ville> get(
+    @GetMapping(value = "/villes")
+    public List<Ville> getVilles(
             @RequestParam(required = false, value = "codePostal") String codePostal,
             @RequestParam(required = false, value = "codeCommuneInsee") String codeCommuneInsee
     ) {
@@ -34,6 +34,20 @@ public class VilleController {
             return this.villeRepository.findAllByCodeCommuneINSEE(codeCommuneInsee);
         } else {
             return this.villeRepository.findAllByCodePostal(codePostal);
+        }
+    }
+
+    @GetMapping(value = "/ville")
+    public Ville getVille(
+            @RequestParam(required = false, value = "codePostal") String codePostal,
+            @RequestParam(required = false, value = "codeCommuneInsee") String codeCommuneInsee
+    ) {
+        if (Objects.isNull(codePostal) && Objects.isNull(codeCommuneInsee)) {
+            return this.villeRepository.findOne();
+        } else if (Objects.isNull(codePostal)) {
+            return this.villeRepository.findByCodeCommuneINSEE(codeCommuneInsee);
+        } else {
+            return this.villeRepository.findByCodePostal(codePostal);
         }
     }
 

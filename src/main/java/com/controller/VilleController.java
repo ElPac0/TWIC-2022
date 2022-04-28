@@ -22,12 +22,12 @@ public class VilleController {
     @GetMapping(value = "/villes")
     public List<Ville> getVilles(
             @RequestParam(required = false, value = "codePostal") String codePostal,
-            @RequestParam(required = false, value = "codeCommuneInsee") String codeCommuneInsee
+            @RequestParam(required = false, value = "codeCommuneINSEE") String codeCommuneINSEE
     ) {
-        if (Objects.isNull(codePostal) && Objects.isNull(codeCommuneInsee)) {
+        if (Objects.isNull(codePostal) && Objects.isNull(codeCommuneINSEE)) {
             return this.villeRepository.findAll();
         } else if (Objects.isNull(codePostal)) {
-            return this.villeRepository.findAllByCodeCommuneINSEE(codeCommuneInsee);
+            return this.villeRepository.findAllByCodeCommuneINSEE(codeCommuneINSEE);
         } else {
             return this.villeRepository.findAllByCodePostal(codePostal);
         }
@@ -36,18 +36,18 @@ public class VilleController {
     @GetMapping(value = "/ville")
     public Ville getVille(
             @RequestParam(required = false, value = "codePostal") String codePostal,
-            @RequestParam(required = false, value = "codeCommuneInsee") String codeCommuneInsee,
+            @RequestParam(required = false, value = "codeCommuneINSEE") String codeCommuneINSEE,
             @RequestParam(required = false, value = "nomCommune") String nomCommune
     ) {
-        if (Objects.isNull(codePostal) && Objects.isNull(codeCommuneInsee)) {
+        if (Objects.isNull(codePostal) && Objects.isNull(codeCommuneINSEE) && Objects.isNull(nomCommune)) {
             return this.villeRepository.findBy();
-        } else if (Objects.nonNull(codeCommuneInsee)) {
-            System.out.println(codeCommuneInsee);
-            System.out.println(this.villeRepository.findByCodeCommuneINSEE(codeCommuneInsee));
-            return this.villeRepository.findByCodeCommuneINSEE(codeCommuneInsee);
+        } else if (Objects.nonNull(codeCommuneINSEE)) {
+//            System.out.println(codeCommuneINSEE);
+//            System.out.println(this.villeRepository.findByCodeCommuneINSEE(codeCommuneINSEE));
+            return this.villeRepository.findByCodeCommuneINSEE(codeCommuneINSEE);
         } else if (Objects.nonNull(nomCommune)) {
-            System.out.println(nomCommune);
-            System.out.println(this.villeRepository.findByNomCommune(nomCommune));
+//            System.out.println(nomCommune);
+//            System.out.println(this.villeRepository.findByNomCommune(nomCommune));
             return this.villeRepository.findByNomCommune(nomCommune);
         }
         else {
@@ -73,4 +73,44 @@ public class VilleController {
         this.villeRepository.save(nouvelleVille);
     }
 
+    @PatchMapping(value="/ville")
+    public Ville patch(
+            @RequestParam(value = "currentCodeCommune") String currentCodeCommune,
+            @RequestParam(required = false, value = "codeCommuneINSEE") String codeCommuneINSEE,
+            @RequestParam(required = false, value = "nomCommune") String nomCommune,
+            @RequestParam(required = false, value = "codePostal") String codePostal,
+            @RequestParam(required = false, value = "libelleAcheminement") String libelleAcheminement,
+            @RequestParam(required = false, value = "ligne5") String ligne5,
+            @RequestParam(required = false, value = "latitude") String latitude,
+            @RequestParam(required = false, value = "longitude") String longitude
+    ){
+        Ville ville = null;
+        if(Objects.nonNull(currentCodeCommune)){
+            ville = this.villeRepository.findByCodeCommuneINSEE(currentCodeCommune);
+            System.out.println("Current Code OK");
+        }
+       if(Objects.nonNull(codeCommuneINSEE)){
+            ville.setCodeCommuneINSEE(codeCommuneINSEE);
+        }
+       if(Objects.nonNull(nomCommune)){
+           ville.setNomCommune(nomCommune);
+        }
+       if(Objects.nonNull(codePostal)){
+           ville.setCodePostal(codePostal);
+        }
+       if(Objects.nonNull(libelleAcheminement)){
+           ville.setLibelleAcheminement(libelleAcheminement);
+        }
+       if(Objects.nonNull(ligne5)){
+           ville.setLigne5(ligne5);
+        }
+       if(Objects.nonNull(latitude)){
+           ville.setLatitude(latitude);
+        }
+       if(Objects.nonNull(longitude)) {
+           ville.setLongitude(longitude);
+       }
+
+       return villeRepository.findByCodeCommuneINSEE(currentCodeCommune);
+    }
 }

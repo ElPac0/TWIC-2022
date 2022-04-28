@@ -8,13 +8,13 @@ import java.util.List;
 
 @Repository
 public interface VilleRepository extends JpaRepository<Ville, String>, JpaSpecificationExecutor<Ville> {
-    List<Ville> findAllByCodePostal(String CodePostal);
-    Ville findByCodePostal(String CodePostal);
-    List<Ville> findAllByCodeCommuneINSEE(String CodeCommuneInsee);
-    Ville findByCodeCommuneINSEE(String CodeCommuneInsee);
+    List<Ville> findAllByCodePostal(String codePostal);
+    Ville findByCodePostal(String codePostal);
+    List<Ville> findAllByCodeCommuneINSEE(String codeCommuneINSEE);
+    Ville findByCodeCommuneINSEE(String codeCommuneINSEE);
     List<Ville> findAllBy();
 
-    Ville findByNomCommune(String NomCommune);
+    Ville findByNomCommune(String nomCommune);
     Ville findBy();
 
 }

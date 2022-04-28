@@ -1,16 +1,14 @@
 package com.controller;
 
-import java.util.List;
-import java.util.Objects;
-
-import javax.persistence.EntityManager;
-
-import org.springframework.aop.framework.DefaultAopProxyFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
 import com.repository.Ville;
 import com.repository.VilleRepository;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.Objects;
 
 @RestController
 public class VilleController {
@@ -43,7 +41,7 @@ public class VilleController {
             @RequestParam(required = false, value = "codeCommuneInsee") String codeCommuneInsee
     ) {
         if (Objects.isNull(codePostal) && Objects.isNull(codeCommuneInsee)) {
-            return this.villeRepository.findOne();
+            return this.villeRepository.findBy();
         } else if (Objects.isNull(codePostal)) {
             return this.villeRepository.findByCodeCommuneINSEE(codeCommuneInsee);
         } else {

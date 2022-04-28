@@ -15,4 +15,5 @@ public interface VilleRepository extends JpaRepository<Ville, String>, JpaSpecif
     List<Ville> findAll();
 
     Ville findOne();
+
 }

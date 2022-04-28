@@ -2,15 +2,13 @@ package com.controller;
 
 import com.repository.Ville;
 import com.repository.VilleRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8080")
 public class VilleController {
 
     private VilleRepository villeRepository;
@@ -38,13 +36,21 @@ public class VilleController {
     @GetMapping(value = "/ville")
     public Ville getVille(
             @RequestParam(required = false, value = "codePostal") String codePostal,
-            @RequestParam(required = false, value = "codeCommuneInsee") String codeCommuneInsee
+            @RequestParam(required = false, value = "codeCommuneInsee") String codeCommuneInsee,
+            @RequestParam(required = false, value = "nomCommune") String nomCommune
     ) {
         if (Objects.isNull(codePostal) && Objects.isNull(codeCommuneInsee)) {
             return this.villeRepository.findBy();
-        } else if (Objects.isNull(codePostal)) {
+        } else if (Objects.nonNull(codeCommuneInsee)) {
+            System.out.println(codeCommuneInsee);
+            System.out.println(this.villeRepository.findByCodeCommuneINSEE(codeCommuneInsee));
             return this.villeRepository.findByCodeCommuneINSEE(codeCommuneInsee);
-        } else {
+        } else if (Objects.nonNull(nomCommune)) {
+            System.out.println(nomCommune);
+            System.out.println(this.villeRepository.findByNomCommune(nomCommune));
+            return this.villeRepository.findByNomCommune(nomCommune);
+        }
+        else {
             return this.villeRepository.findByCodePostal(codePostal);
         }
     }

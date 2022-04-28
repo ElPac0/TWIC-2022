@@ -14,6 +14,7 @@ public interface VilleRepository extends JpaRepository<Ville, String>, JpaSpecif
     Ville findByCodeCommuneINSEE(String CodeCommuneInsee);
     List<Ville> findAllBy();
 
+    Ville findByNomCommune(String NomCommune);
     Ville findBy();
 
 }

@@ -5,6 +5,7 @@
 	<groupId>com</groupId>
 	<artifactId>TWIC-2022</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<properties>
 		<java.version>11</java.version>
 		<sonar.host.url>http://localhost:9000</sonar.host.url>
@@ -62,11 +63,20 @@
 		    <groupId>mysql</groupId>
 		    <artifactId>mysql-connector-java</artifactId>
 		    <type>jar</type>
-		    <scope>compile</scope>
+		    <scope>runtime</scope>
 		</dependency>
 	</dependencies>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>resources</directory>
+				<targetPath>${project.build.outputDirectory}</targetPath>
+				<includes>
+					<include>application.properties</include>
+				</includes>
+			</resource>
+		</resources>
 		<pluginManagement>
 			<plugins>
 				<plugin>

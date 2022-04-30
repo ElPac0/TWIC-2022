@@ -57,7 +57,8 @@ public class VilleController {
     }
 
     @PostMapping(value="/ville")
-    public Ville post(@RequestBody Ville ville) throws Exception {
+    public Ville modifierVille(@RequestBody Ville ville) throws Exception {
+        System.out.println(ville.getCodeCommuneINSEE());
         if (Objects.nonNull(this.villeRepository.findByCodeCommuneINSEE(ville.getCodeCommuneINSEE()))){
             this.villeRepository.deleteById(ville.getCodeCommuneINSEE());
         }
@@ -66,8 +67,8 @@ public class VilleController {
 
     @DeleteMapping(value="/ville")
     public void delete(
-            @RequestParam(required=true, value="codeCommuneINSEE") String codeCommuneINSEE
-    ) throws Exception{
+            @RequestParam(value="codeCommuneINSEE") String codeCommuneINSEE
+    ){
         this.villeRepository.delete(this.villeRepository.findByCodeCommuneINSEE(codeCommuneINSEE));
     }
 }

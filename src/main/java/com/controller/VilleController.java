@@ -2,6 +2,7 @@ package com.controller;
 
 import com.repository.Ville;
 import com.repository.VilleRepository;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,14 +23,18 @@ public class VilleController {
     @GetMapping(value = "/villes")
     public List<Ville> getVilles(
             @RequestParam(required = false, value = "codePostal") String codePostal,
-            @RequestParam(required = false, value = "codeCommuneINSEE") String codeCommuneINSEE
+            @RequestParam(required = false, value = "codeCommuneINSEE") String codeCommuneINSEE,
+            @RequestParam(required = false, value = "page") Integer page
     ) {
-        if (Objects.isNull(codePostal) && Objects.isNull(codeCommuneINSEE)) {
-            return this.villeRepository.findAll();
-        } else if (Objects.isNull(codePostal)) {
+        if (Objects.nonNull(codeCommuneINSEE)) {
             return this.villeRepository.findAllByCodeCommuneINSEE(codeCommuneINSEE);
-        } else {
+        } else if (Objects.nonNull(page)) {
+            List<Ville> villes = this.villeRepository.findAll(PageRequest.of(page, 50)).toList();
+            return villes;
+        } else if(Objects.nonNull(codePostal)) {
             return this.villeRepository.findAllByCodePostal(codePostal);
+        } else {
+            return this.villeRepository.findAll();
         }
     }
 

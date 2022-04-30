@@ -25,7 +25,7 @@ public class Ville {
 	private String codePostal;
     @Column(name="Libelle_acheminement")
 	private String libelleAcheminement;
-    @Column(name="Ligne_5")
+    @Column(name="Ligne_5", nullable = true)
 	private String ligne5;
     @Column(name="Latitude")
     private String latitude;

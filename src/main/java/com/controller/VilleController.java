@@ -71,43 +71,43 @@ public class VilleController {
 
     @PostMapping(value="/ville")
     public Ville post(
-            @RequestParam(value = "currentCodeCommune") String currentCodeCommune,
-            @RequestParam(required = false, value = "codeCommuneINSEE") String codeCommuneINSEE,
-            @RequestParam(required = false, value = "nomCommune") String nomCommune,
-            @RequestParam(required = false, value = "codePostal") String codePostal,
-            @RequestParam(required = false, value = "libelleAcheminement") String libelleAcheminement,
-            @RequestParam(required = false, value = "ligne5") String ligne5,
-            @RequestParam(required = false, value = "latitude") String latitude,
-            @RequestParam(required = false, value = "longitude") String longitude
+            @RequestBody Ville ville
+//            @RequestBody(required = false) String codeCommuneINSEE,
+//            @RequestBody(required = false) String nomCommune,
+//            @RequestBody(required = false) String codePostal,
+//            @RequestBody(required = false) String libelleAcheminement,
+//            @RequestBody(required = false) String ligne5,
+//            @RequestBody(required = false) String latitude,
+//            @RequestBody(required = false) String longitude
     ) throws Exception {
-        Ville ville = null;
-        if(Objects.nonNull(currentCodeCommune)){
-            ville = this.villeRepository.findByCodeCommuneINSEE(currentCodeCommune);
-        }
-        else{
-            throw new Exception("Pas de code détecté");
-        }
-       if(Objects.nonNull(codeCommuneINSEE)){
-            ville.setCodeCommuneINSEE(codeCommuneINSEE);
-        }
-       if(Objects.nonNull(nomCommune)){
-           ville.setNomCommune(nomCommune);
-        }
-       if(Objects.nonNull(codePostal)){
-           ville.setCodePostal(codePostal);
-        }
-       if(Objects.nonNull(libelleAcheminement)){
-           ville.setLibelleAcheminement(libelleAcheminement);
-        }
-       if(Objects.nonNull(ligne5)){
-           ville.setLigne5(ligne5);
-        }
-       if(Objects.nonNull(latitude)){
-           ville.setLatitude(latitude);
-        }
-       if(Objects.nonNull(longitude)) {
-           ville.setLongitude(longitude);
-       }
+//        Ville ville = null;
+//        if(Objects.nonNull(currentCodeCommune)){
+//            ville = this.villeRepository.findByCodeCommuneINSEE(currentCodeCommune);
+//        }
+//        else{
+//            throw new Exception("Pas de code détecté");
+//        }
+//       if(Objects.nonNull(codeCommuneINSEE)){
+//            ville.setCodeCommuneINSEE(codeCommuneINSEE);
+//        }
+//       if(Objects.nonNull(nomCommune)){
+//           ville.setNomCommune(nomCommune);
+//        }
+//       if(Objects.nonNull(codePostal)){
+//           ville.setCodePostal(codePostal);
+//        }
+//       if(Objects.nonNull(libelleAcheminement)){
+//           ville.setLibelleAcheminement(libelleAcheminement);
+//        }
+//       if(Objects.nonNull(ligne5)){
+//           ville.setLigne5(ligne5);
+//        }
+//       if(Objects.nonNull(latitude)){
+//           ville.setLatitude(latitude);
+//        }
+//       if(Objects.nonNull(longitude)) {
+//           ville.setLongitude(longitude);
+//       }
 
        return this.villeRepository.save(ville);
     }

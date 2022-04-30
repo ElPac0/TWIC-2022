@@ -42,12 +42,8 @@ public class VilleController {
         if (Objects.isNull(codePostal) && Objects.isNull(codeCommuneINSEE) && Objects.isNull(nomCommune)) {
             return this.villeRepository.findBy();
         } else if (Objects.nonNull(codeCommuneINSEE)) {
-//            System.out.println(codeCommuneINSEE);
-//            System.out.println(this.villeRepository.findByCodeCommuneINSEE(codeCommuneINSEE));
             return this.villeRepository.findByCodeCommuneINSEE(codeCommuneINSEE);
         } else if (Objects.nonNull(nomCommune)) {
-//            System.out.println(nomCommune);
-//            System.out.println(this.villeRepository.findByNomCommune(nomCommune));
             return this.villeRepository.findByNomCommune(nomCommune);
         }
         else {
@@ -55,26 +51,26 @@ public class VilleController {
         }
     }
 
-    @PostMapping(value = "/ville")
-    public void post(
-            @RequestParam(required = true, value = "Code_commune_INSEE") String Code_commune_INSEE,
-            @RequestParam(required = true, value = "Nom_commune") String Nom_commune,
-            @RequestParam(required = true, value = "Code_postal") String Code_postal,
-            @RequestParam(required = true, value = "Libelle_acheminement") String Libelle_acheminement,
-            @RequestParam(required = true, value = "Ligne_5") String Ligne_5,
-            @RequestParam(required = true, value = "Latitude") String Latitude,
-            @RequestParam(required = true, value = "Longitude") String Longitude
-    ) {
-        Ville nouvelleVille = new Ville(
-                Code_commune_INSEE, Nom_commune, Code_postal, Libelle_acheminement,
-                Ligne_5, Latitude, Longitude
-        );
+//    @PostMapping(value = "/ville")
+//    public void post(
+//            @RequestParam(required = true, value = "Code_commune_INSEE") String Code_commune_INSEE,
+//            @RequestParam(required = true, value = "Nom_commune") String Nom_commune,
+//            @RequestParam(required = true, value = "Code_postal") String Code_postal,
+//            @RequestParam(required = true, value = "Libelle_acheminement") String Libelle_acheminement,
+//            @RequestParam(required = true, value = "Ligne_5") String Ligne_5,
+//            @RequestParam(required = true, value = "Latitude") String Latitude,
+//            @RequestParam(required = true, value = "Longitude") String Longitude
+//    ) {
+//        Ville nouvelleVille = new Ville(
+//                Code_commune_INSEE, Nom_commune, Code_postal, Libelle_acheminement,
+//                Ligne_5, Latitude, Longitude
+//        );
+//
+//        this.villeRepository.save(nouvelleVille);
+//    }
 
-        this.villeRepository.save(nouvelleVille);
-    }
-
-    @PatchMapping(value="/ville")
-    public Ville patch(
+    @PostMapping(value="/ville")
+    public Ville post(
             @RequestParam(value = "currentCodeCommune") String currentCodeCommune,
             @RequestParam(required = false, value = "codeCommuneINSEE") String codeCommuneINSEE,
             @RequestParam(required = false, value = "nomCommune") String nomCommune,
@@ -83,11 +79,13 @@ public class VilleController {
             @RequestParam(required = false, value = "ligne5") String ligne5,
             @RequestParam(required = false, value = "latitude") String latitude,
             @RequestParam(required = false, value = "longitude") String longitude
-    ){
+    ) throws Exception {
         Ville ville = null;
         if(Objects.nonNull(currentCodeCommune)){
             ville = this.villeRepository.findByCodeCommuneINSEE(currentCodeCommune);
-            System.out.println("Current Code OK");
+        }
+        else{
+            throw new Exception("Pas de code détecté");
         }
        if(Objects.nonNull(codeCommuneINSEE)){
             ville.setCodeCommuneINSEE(codeCommuneINSEE);
@@ -111,6 +109,13 @@ public class VilleController {
            ville.setLongitude(longitude);
        }
 
-       return villeRepository.findByCodeCommuneINSEE(currentCodeCommune);
+       return this.villeRepository.save(ville);
+    }
+
+    @DeleteMapping(value="/ville")
+    public void delete(
+            @RequestParam(required=true, value="codeCommuneINSEE") String codeCommuneINSEE
+    ) throws Exception{
+        this.villeRepository.delete(this.villeRepository.findByCodeCommuneINSEE(codeCommuneINSEE));
     }
 }
